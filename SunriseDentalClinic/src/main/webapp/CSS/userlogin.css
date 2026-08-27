@@ -1,0 +1,333 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #eaf6ff 0%, #dcefff 50%, #f5fbff 100%);
+    padding: 20px;
+}
+
+.login-container {
+    width: 760px;
+    max-width: 100%;
+    min-height: 460px;
+    display: flex;
+    background: #ffffff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 15px 40px rgba(30, 100, 160, 0.15);
+}
+
+.login-image {
+    width: 45%;
+    min-height: 460px;
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    padding: 35px;
+    color: white;
+    background-image: linear-gradient(rgba(0, 93, 158, 0.20), rgba(0, 65, 115, 0.78)), url("../images/login.jpg");
+    background-size: cover;
+    background-position: center;
+}
+
+.image-overlay {
+    position: relative;
+    z-index: 2;
+}
+
+.image-overlay h1 {
+    font-size: 29px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    letter-spacing: 0.2px;
+}
+
+.image-overlay p {
+    max-width: 285px;
+    font-size: 13px;
+    line-height: 1.6;
+    color: #f2f9ff;
+}
+
+.login-form-container {
+    width: 55%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 35px 40px;
+}
+
+.login-form {
+    width: 100%;
+    max-width: 350px;
+}
+
+.login-icon {
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 11px;
+    background: #e4f3ff;
+    color: #087bc1;
+    font-size: 25px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.login-icon span {
+    line-height: 1;
+}
+
+.login-form h2 {
+    font-size: 27px;
+    font-weight: 700;
+    color: #173b55;
+    margin-bottom: 5px;
+}
+
+.subtitle {
+    color: #7a8e9d;
+    font-size: 13px;
+    margin-bottom: 21px;
+}
+
+.error-message {
+    background: #fff1f1;
+    color: #d62828;
+    border: 1px solid #f4c1c1;
+    padding: 9px 11px;
+    border-radius: 7px;
+    margin-bottom: 15px;
+    font-size: 12px;
+    line-height: 1.4;
+}
+
+.input-group {
+    margin-bottom: 15px;
+}
+
+.input-group label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: #344b5e;
+    margin-bottom: 6px;
+}
+
+.input-wrapper,
+.password-container {
+    position: relative;
+    width: 100%;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    background: #f9fcff;
+    border: 1px solid #d5e3ed;
+    border-radius: 7px;
+    transition: 0.25s ease;
+}
+
+.input-wrapper:focus-within,
+.password-container:focus-within {
+    background: #ffffff;
+    border-color: #168bd0;
+    box-shadow: 0 0 0 3px rgba(22, 139, 208, 0.10);
+}
+
+.input-icon {
+    width: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #168bd0;
+    font-size: 15px;
+    font-weight: bold;
+    flex-shrink: 0;
+}
+
+.input-wrapper input,
+.password-container input {
+    width: 100%;
+    height: 100%;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: #253746;
+    font-size: 12.5px;
+    padding: 0 10px 0 2px;
+}
+
+.input-wrapper input::placeholder,
+.password-container input::placeholder {
+    color: #a0afba;
+}
+
+.password-container input {
+    padding-right: 58px;
+}
+
+.show-password {
+    position: absolute;
+    right: 9px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    background: transparent;
+    color: #087bc1;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 4px;
+    transition: 0.2s;
+}
+
+.show-password:hover {
+    color: #045c91;
+    text-decoration: underline;
+}
+
+.login-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 2px;
+    margin-bottom: 18px;
+    font-size: 11px;
+}
+
+.remember {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #718394;
+    cursor: pointer;
+}
+
+.remember input {
+    width: 13px;
+    height: 13px;
+    accent-color: #087bc1;
+    cursor: pointer;
+}
+
+.login-options a {
+    color: #087bc1;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.login-options a:hover {
+    text-decoration: underline;
+}
+
+.login-button {
+    width: 100%;
+    height: 42px;
+    border: none;
+    border-radius: 7px;
+    background: linear-gradient(135deg, #087bc1, #159ce5);
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 5px 12px rgba(8, 123, 193, 0.20);
+    transition: 0.25s ease;
+}
+
+.login-button:hover {
+    background: linear-gradient(135deg, #066ca9, #108bd0);
+    transform: translateY(-1px);
+    box-shadow: 0 7px 16px rgba(8, 123, 193, 0.27);
+}
+
+.login-button:active {
+    transform: translateY(0);
+}
+
+.register-text {
+    text-align: center;
+    margin-top: 17px;
+    color: #8494a0;
+    font-size: 11px;
+}
+
+.register-text a {
+    color: #087bc1;
+    font-weight: 600;
+    text-decoration: none;
+    margin-left: 3px;
+}
+
+.register-text a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 700px) {
+    body {
+        padding: 15px;
+    }
+
+    .login-container {
+        width: 420px;
+        min-height: auto;
+        flex-direction: column;
+    }
+
+    .login-image {
+        width: 100%;
+        min-height: 190px;
+        height: 190px;
+        padding: 25px;
+    }
+
+    .image-overlay h1 {
+        font-size: 24px;
+    }
+
+    .image-overlay p {
+        font-size: 12px;
+        max-width: 330px;
+    }
+
+    .login-form-container {
+        width: 100%;
+        padding: 30px 25px;
+    }
+
+    .login-form {
+        max-width: 360px;
+    }
+}
+
+@media (max-width: 400px) {
+    body {
+        padding: 10px;
+    }
+
+    .login-image {
+        min-height: 170px;
+        height: 170px;
+    }
+
+    .login-form-container {
+        padding: 25px 20px;
+    }
+
+    .login-form h2 {
+        font-size: 24px;
+    }
+
+    .login-options {
+        font-size: 10px;
+    }
+}
