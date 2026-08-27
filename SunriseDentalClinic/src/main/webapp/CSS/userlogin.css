@@ -10,8 +10,8 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, #eaf6ff 0%, #dcefff 50%, #f5fbff 100%);
     padding: 20px;
+    background: linear-gradient(135deg, #eaf6ff 0%, #d9efff 50%, #f7fbff 100%);
 }
 
 .login-container {
@@ -22,18 +22,18 @@ body {
     background: #ffffff;
     border-radius: 16px;
     overflow: hidden;
-    box-shadow: 0 15px 40px rgba(30, 100, 160, 0.15);
+    box-shadow: 0 15px 40px rgba(15, 91, 140, 0.16);
 }
 
 .login-image {
     width: 45%;
     min-height: 460px;
-    position: relative;
     display: flex;
     align-items: flex-end;
+    position: relative;
     padding: 35px;
-    color: white;
-    background-image: linear-gradient(rgba(0, 93, 158, 0.20), rgba(0, 65, 115, 0.78)), url("../images/login.jpg");
+    color: #ffffff;
+    background-image: linear-gradient(rgba(0, 105, 170, 0.20), rgba(0, 65, 115, 0.78)), url("../images/loginn.png");
     background-size: cover;
     background-position: center;
 }
@@ -46,15 +46,14 @@ body {
 .image-overlay h1 {
     font-size: 29px;
     font-weight: 700;
-    margin-bottom: 10px;
+    margin-bottom: 9px;
     letter-spacing: 0.2px;
 }
 
 .image-overlay p {
-    max-width: 285px;
     font-size: 13px;
     line-height: 1.6;
-    color: #f2f9ff;
+    color: #eef9ff;
 }
 
 .login-form-container {
@@ -76,12 +75,12 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 11px;
+    margin-bottom: 14px;
+    border-radius: 10px;
     background: #e4f3ff;
     color: #087bc1;
     font-size: 25px;
     font-weight: bold;
-    margin-bottom: 15px;
 }
 
 .login-icon span {
@@ -96,12 +95,15 @@ body {
 }
 
 .subtitle {
-    color: #7a8e9d;
+    color: #7c8e9c;
     font-size: 13px;
     margin-bottom: 21px;
 }
 
 .error-message {
+    display: flex;
+    align-items: center;
+    gap: 8px;
     background: #fff1f1;
     color: #d62828;
     border: 1px solid #f4c1c1;
@@ -110,6 +112,31 @@ body {
     margin-bottom: 15px;
     font-size: 12px;
     line-height: 1.4;
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    transition: opacity 0.5s ease, transform 0.5s ease, visibility 0.5s ease, margin 0.5s ease;
+}
+
+.error-icon {
+    width: 17px;
+    height: 17px;
+    min-width: 17px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #d62828;
+    color: white;
+    font-size: 11px;
+    font-weight: bold;
+}
+
+.error-message.hide {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px);
+    margin-bottom: 0;
 }
 
 .input-group {
@@ -118,9 +145,9 @@ body {
 
 .input-group label {
     display: block;
+    color: #344b5e;
     font-size: 12px;
     font-weight: 600;
-    color: #344b5e;
     margin-bottom: 6px;
 }
 
@@ -134,7 +161,7 @@ body {
     background: #f9fcff;
     border: 1px solid #d5e3ed;
     border-radius: 7px;
-    transition: 0.25s ease;
+    transition: all 0.25s ease;
 }
 
 .input-wrapper:focus-within,
@@ -146,6 +173,7 @@ body {
 
 .input-icon {
     width: 35px;
+    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -188,7 +216,7 @@ body {
     font-weight: 600;
     cursor: pointer;
     padding: 4px;
-    transition: 0.2s;
+    transition: 0.2s ease;
 }
 
 .show-password:hover {
@@ -241,7 +269,7 @@ body {
     font-weight: 600;
     cursor: pointer;
     box-shadow: 0 5px 12px rgba(8, 123, 193, 0.20);
-    transition: 0.25s ease;
+    transition: all 0.25s ease;
 }
 
 .login-button:hover {
@@ -252,24 +280,6 @@ body {
 
 .login-button:active {
     transform: translateY(0);
-}
-
-.register-text {
-    text-align: center;
-    margin-top: 17px;
-    color: #8494a0;
-    font-size: 11px;
-}
-
-.register-text a {
-    color: #087bc1;
-    font-weight: 600;
-    text-decoration: none;
-    margin-left: 3px;
-}
-
-.register-text a:hover {
-    text-decoration: underline;
 }
 
 @media (max-width: 700px) {
@@ -296,7 +306,6 @@ body {
 
     .image-overlay p {
         font-size: 12px;
-        max-width: 330px;
     }
 
     .login-form-container {
@@ -315,8 +324,8 @@ body {
     }
 
     .login-image {
-        min-height: 170px;
-        height: 170px;
+        min-height: 165px;
+        height: 165px;
     }
 
     .login-form-container {

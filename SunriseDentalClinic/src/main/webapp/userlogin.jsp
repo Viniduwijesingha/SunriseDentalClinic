@@ -12,7 +12,7 @@
         <div class="login-image">
             <div class="image-overlay">
                 <h1>Sunrise Dental</h1>
-                <p>Your smile is our priority. Book your appointment and manage your dental care easily.</p>
+                <p>Dental Clinic Management System</p>
             </div>
         </div>
 
@@ -22,7 +22,7 @@
                     <span>+</span>
                 </div>
 
-                <h2>Welcome Back</h2>
+                <h2>Welcome</h2>
                 <p class="subtitle">Login to your account</p>
 
                 <%
@@ -30,7 +30,8 @@
                     if (errorMessage != null) {
                 %>
                     <div class="error-message">
-                        <%= errorMessage %>
+                        <span class="error-icon">!</span>
+                        <span><%= errorMessage %></span>
                     </div>
                 <%
                     }
@@ -81,6 +82,14 @@
                 password.type = "password";
                 button.textContent = "Show";
             }
+        }
+
+        const errorMessage = document.querySelector(".error-message");
+
+        if (errorMessage) {
+            setTimeout(function() {
+                errorMessage.classList.add("hide");
+            }, 4000);
         }
 
         document.getElementById("loginForm").addEventListener("submit", function(event) {
