@@ -494,7 +494,7 @@
 
                             <div class="action-buttons">
 
-                                <a href="patientupdate.jsp?id=<%= pat.getP_id() %>"
+                                <a href="patientupdate?p_id=<%= pat.getP_id() %>"
                                    class="btn-edit">
 
                                     Edit
@@ -502,7 +502,7 @@
                                 </a>
 
 
-                                <a href="patientdelete?id=<%= pat.getP_id() %>"
+                               <a href="patientdelete?p_id=<%= pat.getP_id() %>"
                                    class="btn-delete"
                                    onclick="return confirmDelete('<%= pat.getP_name() %>');">
 
