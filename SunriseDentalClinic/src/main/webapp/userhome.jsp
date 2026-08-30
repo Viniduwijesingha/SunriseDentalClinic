@@ -33,7 +33,7 @@
     <nav class="navigation">
         <div class="nav-section-title">Main Menu</div>
         <a href="userhome.jsp" class="nav-item active"><span class="nav-icon">⌂</span><span>Dashboard</span></a>
-        <a href="manageusers.jsp" class="nav-item"><span class="nav-icon">♙</span><span>Manage Users</span></a>
+        <a href="managepatient.jsp" class="nav-item"><span class="nav-icon">♙</span><span>Manage Users</span></a>
         <a href="manageappointments.jsp" class="nav-item"><span class="nav-icon">▣</span><span>Appointments</span></a>
         <a href="managebills.jsp" class="nav-item"><span class="nav-icon">$</span><span>Manage Bills</span></a>
         <a href="helpandsupport.jsp" class="nav-item"><span class="nav-icon">?</span><span>Help & Support</span></a>
