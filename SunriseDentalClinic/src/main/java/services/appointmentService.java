@@ -2,12 +2,15 @@ package services;
 
 import controller.DataBaseConnect;
 import model.appointment;
+import model.apptreatment;
 
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class appointmentService {
 
@@ -229,6 +232,65 @@ public class appointmentService {
         }
 
         return appointmentList;
+    }
+
+
+    /**
+     * Works out the next appointment number by looking at the most
+     * recently inserted one (e.g. "APT-0007" -> "APT-0008"). Falls back
+     * to "APT-0001" if there are no appointments yet, or if the last
+     * number doesn't end in digits for some reason.
+     */
+    public String generateNextAppointmentNumber() {
+
+        String prefix = "APT-";
+        int nextSeq = 1;
+
+        String sql =
+                "SELECT a_number FROM appointment " +
+                "ORDER BY a_id DESC LIMIT 1";
+
+        try (
+                Connection conn = DataBaseConnect.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql);
+                ResultSet rs = stmt.executeQuery()
+        ) {
+
+            if (rs.next()) {
+
+                String lastNumber = rs.getString("a_number");
+
+                if (lastNumber != null) {
+
+                    Matcher matcher =
+                            Pattern.compile("(\\d+)$").matcher(lastNumber.trim());
+
+                    if (matcher.find()) {
+
+                        nextSeq = Integer.parseInt(matcher.group(1)) + 1;
+                    }
+
+                    Matcher prefixMatcher =
+                            Pattern.compile("^(\\D*)\\d+$").matcher(lastNumber.trim());
+
+                    if (prefixMatcher.find() &&
+                            !prefixMatcher.group(1).isEmpty()) {
+
+                        prefix = prefixMatcher.group(1);
+                    }
+                }
+            }
+
+        } catch (Exception e) {
+
+            System.out.println(
+                    "ERROR generating appointment number: " + e.getMessage()
+            );
+
+            e.printStackTrace();
+        }
+
+        return prefix + String.format("%04d", nextSeq);
     }
 
 
@@ -594,6 +656,60 @@ public class appointmentService {
         }
 
         return treatmentIds;
+    }
+
+
+    /**
+     * Loads the full treatment details (name, price, status) for every
+     * treatment linked to an appointment. Used by the appointment view
+     * page, which needs more than just the raw treatment IDs.
+     */
+    public ArrayList<apptreatment> getTreatmentsByAppointmentId(
+            int appointmentId) {
+
+        ArrayList<apptreatment> treatmentList =
+                new ArrayList<>();
+
+        String sql =
+                "SELECT t.t_id, t.t_name, t.priceLkr, t.status " +
+                "FROM treatment_appointment ta " +
+                "INNER JOIN apptreatment t ON ta.t_id = t.t_id " +
+                "WHERE ta.a_id = ? " +
+                "ORDER BY ta.ta_id";
+
+        try (
+                Connection conn = DataBaseConnect.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql)
+        ) {
+
+            stmt.setInt(1, appointmentId);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+
+                while (rs.next()) {
+
+                    apptreatment t = new apptreatment();
+
+                    t.setT_id(rs.getInt("t_id"));
+                    t.setT_name(rs.getString("t_name"));
+                    t.setPriceLkr(rs.getBigDecimal("priceLkr"));
+                    t.setStatus(rs.getString("status"));
+
+                    treatmentList.add(t);
+                }
+            }
+
+        } catch (Exception e) {
+
+            System.out.println(
+                    "ERROR loading appointment treatment details: "
+                    + e.getMessage()
+            );
+
+            e.printStackTrace();
+        }
+
+        return treatmentList;
     }
 
 

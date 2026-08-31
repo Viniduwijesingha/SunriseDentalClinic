@@ -279,6 +279,69 @@ public class patientService {
     }
 
 
+    /**
+     * Same as addPatient(), but returns the generated p_id so the caller
+     * (e.g. the appointment-booking flow) can immediately link the new
+     * patient to an appointment. Returns 0 on failure.
+     */
+    public int addPatientReturnId(patient pat) {
+
+        String sql =
+                "INSERT INTO patient " +
+                "(p_name, p_address, contact_number, gender, status) " +
+                "VALUES (?, ?, ?, ?, ?)";
+
+        try (
+                Connection conn = DataBaseConnect.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(
+                        sql, PreparedStatement.RETURN_GENERATED_KEYS
+                )
+        ) {
+
+            stmt.setString(1, pat.getP_name());
+            stmt.setString(2, pat.getP_address());
+            stmt.setString(3, pat.getContact_number());
+            stmt.setString(4, pat.getGender());
+
+            String status = pat.getStatus();
+
+            if (status == null ||
+                    status.trim().isEmpty()) {
+
+                status = "Active";
+            }
+
+            stmt.setString(5, status);
+
+            int rows = stmt.executeUpdate();
+
+            if (rows == 0) {
+                return 0;
+            }
+
+            try (ResultSet keys = stmt.getGeneratedKeys()) {
+
+                if (keys.next()) {
+                    return keys.getInt(1);
+                }
+            }
+
+            return 0;
+
+        } catch (Exception e) {
+
+            System.out.println(
+                    "ERROR adding patient: "
+                    + e.getMessage()
+            );
+
+            e.printStackTrace();
+
+            return 0;
+        }
+    }
+
+
     public boolean updatePatient(patient pat) {
 
         String sql =
