@@ -497,7 +497,15 @@
 
                             <div class="action-buttons">
 
-                                <a href="appointmentupdate.jsp?a_id=<%= app.getA_id() %>"
+                                <a href="appointmentview?a_id=<%= app.getA_id() %>"
+                                   class="btn-view">
+
+                                    View
+
+                                </a>
+
+
+                                <a href="appointmentupdate?a_id=<%= app.getA_id() %>"
                                    class="btn-edit">
 
                                     Edit
