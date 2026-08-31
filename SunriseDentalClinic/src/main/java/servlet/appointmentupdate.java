@@ -22,12 +22,7 @@ import services.appointmentService;
 import services.apptreatmentService;
 import services.dentistService;
 
-/**
- * Handles editing an existing appointment: loading it (with the current
- * dentist / treatment selections) for the edit form, and saving changes
- * back to the database. The linked patient is not editable here - only
- * dentist, date/time, status and treatments can change.
- */
+
 @WebServlet("/appointmentupdate")
 public class appointmentupdate extends HttpServlet {
 
