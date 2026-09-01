@@ -518,9 +518,7 @@
                             <div class="action-buttons">
 
                                 <a href="billprint?a_id=<%= app.getA_id() %>"
-                                   class="btn-print"
-                                   target="_blank"
-                                   rel="noopener">
+                                   class="btn-print">
 
                                     Print Bill
 

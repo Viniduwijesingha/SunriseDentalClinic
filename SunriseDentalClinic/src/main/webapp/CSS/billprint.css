@@ -6,10 +6,9 @@
 
 body {
     font-family: Arial, Helvetica, sans-serif;
-    background: #e2e8f0;
+    background: #f1f5f9;
     color: #1e293b;
     min-height: 100vh;
-    padding: 24px 16px 60px;
 }
 
 a {
@@ -17,14 +16,232 @@ a {
     color: inherit;
 }
 
-/* ===== Toolbar (hidden when printing) ===== */
+/* ===== Sidebar ===== */
 
-.print-toolbar {
-    max-width: 780px;
-    margin: 0 auto 18px;
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 235px;
+    background: #111c2e;
+    border-right: 1px solid #1d2a3d;
+    display: flex;
+    flex-direction: column;
+    z-index: 100;
+    box-shadow: 3px 0 15px rgba(15, 23, 42, 0.12);
+}
+
+.logo {
+    height: 88px;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    border-bottom: 1px solid #263449;
+}
+
+.logo-icon {
+    width: 39px;
+    height: 39px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #2563eb, #3b82f6);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 21px;
+    font-weight: bold;
+    margin-right: 10px;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.30);
+}
+
+.logo-text h2 {
+    font-size: 16px;
+    color: #ffffff;
+    margin-bottom: 3px;
+    font-weight: 700;
+}
+
+.logo-text span {
+    font-size: 10px;
+    color: #8fa1b7;
+}
+
+.navigation {
+    padding: 20px 12px;
+    flex: 1;
+    overflow-y: auto;
+}
+
+.nav-section-title {
+    color: #7f91a8;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    padding: 0 12px;
+    margin-bottom: 10px;
+}
+
+.nav-item {
+    height: 43px;
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding: 0 12px;
+    margin-bottom: 5px;
+    border-radius: 7px;
+    color: #a7b5c7;
+    font-size: 13px;
+    font-weight: 600;
+    transition: all 0.25s ease;
+}
+
+.nav-item:hover {
+    background: #1c2a40;
+    color: #ffffff;
+}
+
+.nav-item.active {
+    background: #2f6fed;
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(47, 111, 237, 0.25);
+}
+
+.nav-icon {
+    width: 23px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+}
+
+.sidebar-bottom {
+    padding: 14px 12px;
+    border-top: 1px solid #263449;
+}
+
+.logout {
+    height: 43px;
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding: 0 12px;
+    border-radius: 7px;
+    color: #aebaca;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.logout:hover {
+    background: #2a2025;
+    color: #ff7b7b;
+}
+
+/* ===== Main / topbar ===== */
+
+.main-content {
+    margin-left: 235px;
+    min-height: 100vh;
+    background: #f1f5f9;
+}
+
+.topbar {
+    min-height: 88px;
+    background: #ffffff;
+    border-bottom: 1px solid #e2e8f0;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    padding: 14px 32px;
+    box-shadow: 0 1px 5px rgba(15, 23, 42, 0.04);
+}
+
+.topbar-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.mobile-logo {
+    display: none;
+}
+
+.mobile-logo-icon {
+    width: 29px;
+    height: 29px;
+    margin-right: 7px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    background: linear-gradient(135deg, #2563eb, #3b82f6);
+}
+
+.topbar-title h1 {
+    color: #1e293b;
+    font-size: 21px;
+    font-weight: 700;
+}
+
+.topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.profile {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
+.profile-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #dbeafe;
+    color: #2563eb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: bold;
+    border: 1px solid #bfdbfe;
+}
+
+.profile-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.profile-info strong {
+    color: #1e293b;
+    font-size: 12px;
+}
+
+.page-content {
+    width: 100%;
+    padding: 32px;
+}
+
+/* ===== Invoice ===== */
+
+.invoice-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.invoice-actions {
+    width: 100%;
+    max-width: 780px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-bottom: 14px;
 }
 
 .btn-clear {
@@ -32,12 +249,13 @@ a {
     padding: 0 15px;
     display: inline-flex;
     align-items: center;
-    border: 1px solid #cbd5e1;
+    border: 1px solid #e2e8f0;
     border-radius: 7px;
     color: #64748b;
-    font-size: 12px;
+    font-size: 11.5px;
     font-weight: 600;
     background: #ffffff;
+    white-space: nowrap;
 }
 
 .btn-clear:hover {
@@ -55,24 +273,25 @@ a {
     border-radius: 7px;
     background: #2563eb;
     color: #ffffff;
-    font-size: 12px;
+    font-size: 11.5px;
     font-weight: 700;
     cursor: pointer;
+    white-space: nowrap;
 }
 
 .btn-primary:hover {
     background: #1d4ed8;
 }
 
-/* ===== Invoice sheet ===== */
-
 .invoice-sheet {
+    position: relative;
+    width: 100%;
     max-width: 780px;
-    margin: 0 auto;
     background: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 6px 24px rgba(15, 23, 42, 0.08);
-    padding: 40px 44px;
+    border-radius: 12px;
+    box-shadow: 0 8px 28px rgba(15, 23, 42, 0.08);
+    padding: 44px 48px;
+    overflow: hidden;
 }
 
 .invoice-header {
@@ -80,37 +299,38 @@ a {
     align-items: flex-start;
     justify-content: space-between;
     gap: 20px;
-    padding-bottom: 24px;
-    border-bottom: 2px solid #1e293b;
-    margin-bottom: 24px;
+    padding-bottom: 26px;
+    margin-bottom: 26px;
+    border-bottom: 3px solid #1e293b;
 }
 
 .clinic-name {
     display: flex;
     align-items: center;
     gap: 10px;
-    font-size: 19px;
+    font-size: 20px;
     font-weight: 800;
     color: #1e293b;
 }
 
 .clinic-logo {
-    width: 34px;
-    height: 34px;
-    border-radius: 9px;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
     background: linear-gradient(135deg, #2563eb, #3b82f6);
     color: #ffffff;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 18px;
+    font-size: 19px;
     font-weight: bold;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.30);
 }
 
 .clinic-info p {
     margin-top: 4px;
     color: #64748b;
-    font-size: 11px;
+    font-size: 10.5px;
 }
 
 .invoice-meta {
@@ -118,10 +338,10 @@ a {
 }
 
 .invoice-meta h1 {
-    font-size: 24px;
-    letter-spacing: 2px;
+    font-size: 26px;
+    letter-spacing: 3px;
     color: #2563eb;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
 }
 
 .invoice-meta p {
@@ -130,15 +350,20 @@ a {
     margin-bottom: 2px;
 }
 
+.invoice-meta p strong {
+    color: #1e293b;
+    margin-right: 4px;
+}
+
 .status-tag {
     display: inline-block;
-    margin-top: 8px;
-    padding: 4px 10px;
-    border-radius: 5px;
-    font-size: 9.5px;
+    margin-top: 10px;
+    padding: 5px 12px;
+    border-radius: 6px;
+    font-size: 10px;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.4px;
+    letter-spacing: 0.5px;
 }
 
 .status-pending {
@@ -167,7 +392,14 @@ a {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 24px;
-    margin-bottom: 28px;
+    margin-bottom: 30px;
+}
+
+.party-block {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 16px 18px;
 }
 
 .party-label {
@@ -177,12 +409,12 @@ a {
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    margin-bottom: 6px;
+    margin-bottom: 8px;
 }
 
 .party-block strong {
     display: block;
-    font-size: 13px;
+    font-size: 13.5px;
     color: #1e293b;
     margin-bottom: 4px;
 }
@@ -208,15 +440,24 @@ a {
     text-transform: uppercase;
     letter-spacing: 0.4px;
     color: #64748b;
-    padding: 10px 8px;
+    padding: 11px 10px;
+    background: #f8fafc;
     border-bottom: 2px solid #e2e8f0;
+}
+
+.invoice-table .col-no {
+    width: 40px;
 }
 
 .invoice-table td {
     font-size: 12px;
     color: #334155;
-    padding: 11px 8px;
+    padding: 12px 10px;
     border-bottom: 1px solid #f1f5f9;
+}
+
+.invoice-table tbody tr:nth-child(even) {
+    background: #fafbfd;
 }
 
 .align-right {
@@ -226,36 +467,42 @@ a {
 .no-items {
     text-align: center;
     color: #94a3b8;
-    padding: 24px 8px;
+    padding: 26px 8px;
 }
 
-/* ===== Total ===== */
+/* ===== Summary ===== */
 
-.invoice-total {
+.invoice-summary {
+    margin-top: 14px;
+    padding-top: 4px;
     display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 14px;
-    padding: 16px 8px;
-    margin-top: 10px;
-    border-top: 2px solid #1e293b;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 6px;
 }
 
-.invoice-total span {
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 40px;
+    width: 260px;
     font-size: 12px;
-    font-weight: 600;
     color: #64748b;
 }
 
-.invoice-total strong {
-    font-size: 20px;
+.total-row {
+    margin-top: 6px;
+    padding-top: 10px;
+    border-top: 2px solid #1e293b;
+    font-size: 15px;
+    font-weight: 800;
     color: #1e293b;
 }
 
 /* ===== Footer ===== */
 
 .invoice-footer {
-    margin-top: 36px;
+    margin-top: 40px;
     text-align: center;
     color: #94a3b8;
     font-size: 10.5px;
@@ -269,13 +516,22 @@ a {
 
 @media print {
 
-    body {
-        background: #ffffff;
-        padding: 0;
+    .sidebar,
+    .topbar,
+    .invoice-actions {
+        display: none;
     }
 
-    .print-toolbar {
-        display: none;
+    .main-content {
+        margin-left: 0;
+    }
+
+    body {
+        background: #ffffff;
+    }
+
+    .page-content {
+        padding: 0;
     }
 
     .invoice-sheet {
@@ -287,7 +543,88 @@ a {
 
 }
 
-@media (max-width: 640px) {
+/* ===== Responsive ===== */
+
+@media (max-width: 1000px) {
+
+    .sidebar {
+        width: 210px;
+    }
+
+    .main-content {
+        margin-left: 210px;
+    }
+
+    .page-content {
+        padding: 24px 20px;
+    }
+
+}
+
+@media (max-width: 700px) {
+
+    .sidebar {
+        position: relative;
+        width: 100%;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid #263449;
+    }
+
+    .logo {
+        height: 65px;
+        padding: 0 17px;
+    }
+
+    .navigation {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        padding: 9px;
+    }
+
+    .nav-section-title {
+        grid-column: 1 / -1;
+        margin-top: 5px;
+    }
+
+    .main-content {
+        margin-left: 0;
+    }
+
+    .topbar {
+        min-height: 62px;
+        padding: 10px 17px;
+    }
+
+    .mobile-logo {
+        display: flex;
+        align-items: center;
+        color: #1e293b;
+        font-size: 13px;
+        font-weight: bold;
+    }
+
+    .topbar-title {
+        display: none;
+    }
+
+    .profile-info {
+        display: none;
+    }
+
+    .page-content {
+        padding: 18px;
+    }
+
+    .invoice-actions {
+        justify-content: stretch;
+    }
+
+    .invoice-actions .btn-clear,
+    .invoice-actions .btn-primary {
+        flex: 1;
+        justify-content: center;
+    }
 
     .invoice-sheet {
         padding: 26px 20px;
@@ -305,15 +642,20 @@ a {
         grid-template-columns: 1fr;
     }
 
-    .print-toolbar {
-        flex-direction: column;
-        gap: 10px;
-        align-items: stretch;
+}
+
+@media (max-width: 400px) {
+
+    .navigation {
+        grid-template-columns: 1fr;
     }
 
-    .print-toolbar .btn-clear,
-    .print-toolbar .btn-primary {
-        justify-content: center;
+    .nav-section-title {
+        grid-column: auto;
+    }
+
+    .page-content {
+        padding: 15px;
     }
 
 }

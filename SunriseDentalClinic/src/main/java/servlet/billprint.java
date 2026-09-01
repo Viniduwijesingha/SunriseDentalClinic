@@ -15,7 +15,6 @@ import model.apptreatment;
 import model.appointment;
 import services.appointmentService;
 
-
 @WebServlet("/billprint")
 public class billprint extends HttpServlet {
 

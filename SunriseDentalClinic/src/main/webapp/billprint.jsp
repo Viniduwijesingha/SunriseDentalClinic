@@ -7,11 +7,18 @@
 
 <%
     String userName = (String) session.getAttribute("loggedInUser");
+    String userEmail = (String) session.getAttribute("userEmail");
 
     if (userName == null || userName.trim().isEmpty()) {
         response.sendRedirect("userlogin.jsp");
         return;
     }
+
+    if (userEmail == null) {
+        userEmail = "";
+    }
+
+    String profileLetter = userName.substring(0, 1).toUpperCase();
 
     appointment app = (appointment) request.getAttribute("appointment");
 
@@ -44,6 +51,18 @@
     if (status == null || status.trim().isEmpty()) {
         status = "Pending";
     }
+
+    String statusClass;
+
+    if (status.equalsIgnoreCase("Completed")) {
+        statusClass = "status-completed";
+    } else if (status.equalsIgnoreCase("Cancelled")) {
+        statusClass = "status-cancelled";
+    } else if (status.equalsIgnoreCase("Confirmed")) {
+        statusClass = "status-confirmed";
+    } else {
+        statusClass = "status-pending";
+    }
 %>
 
 <!DOCTYPE html>
@@ -65,160 +84,333 @@
 
 <body>
 
-<div class="print-toolbar">
+<aside class="sidebar">
 
-    <a href="managebill" class="btn-clear">
-        ← Back to Bills
-    </a>
+    <div class="logo">
 
-    <button type="button"
-            class="btn-primary"
-            onclick="window.print();">
+        <div class="logo-icon">+</div>
 
-        🖨 Print Bill
+        <div class="logo-text">
 
-    </button>
+            <h2>Sunrise Dental</h2>
 
-</div>
+            <span>Dental Clinic</span>
+
+        </div>
+
+    </div>
 
 
-<div class="invoice-sheet">
+    <nav class="navigation">
 
-    <div class="invoice-header">
+        <div class="nav-section-title">
+            Main Menu
+        </div>
 
-        <div class="clinic-info">
+        <a href="userhome.jsp"
+           class="nav-item">
 
-            <div class="clinic-name">
-                <span class="clinic-logo">+</span>
-                Sunrise Dental
+            <span class="nav-icon">⌂</span>
+
+            <span>Dashboard</span>
+
+        </a>
+
+
+        <a href="managepatient"
+           class="nav-item">
+
+            <span class="nav-icon">♙</span>
+
+            <span>Manage Patients</span>
+
+        </a>
+
+
+        <a href="manageappointment"
+           class="nav-item">
+
+            <span class="nav-icon">▣</span>
+
+            <span>Appointments</span>
+
+        </a>
+
+
+        <a href="managebill"
+           class="nav-item active">
+
+            <span class="nav-icon">$</span>
+
+            <span>Manage Bills</span>
+
+        </a>
+
+
+        <a href="helpandsupport.jsp"
+           class="nav-item">
+
+            <span class="nav-icon">?</span>
+
+            <span>Help & Support</span>
+
+        </a>
+
+    </nav>
+
+
+    <div class="sidebar-bottom">
+
+        <a href="logout"
+           class="logout"
+           onclick="return confirmLogout();">
+
+            <span class="nav-icon">↪</span>
+
+            <span>Logout</span>
+
+        </a>
+
+    </div>
+
+</aside>
+
+
+<main class="main-content">
+
+
+    <header class="topbar">
+
+        <div class="topbar-left">
+
+            <div class="mobile-logo">
+
+                <div class="mobile-logo-icon">+</div>
+
+                <span>Sunrise Dental</span>
+
             </div>
 
-            <p>Dental Clinic</p>
+            <div class="topbar-title">
+
+                <h1>Bill Preview</h1>
+
+            </div>
 
         </div>
 
-        <div class="invoice-meta">
 
-            <h1>BILL</h1>
+        <div class="topbar-right">
 
-            <p><strong>Bill Ref:</strong> <%= app.getA_number() %></p>
-            <p><strong>Issued:</strong> <%= issuedToday %></p>
+            <div class="profile"
+                 title="<%= userEmail %>">
 
-            <span class="status-tag status-<%= status.toLowerCase() %>">
-                <%= status %>
-            </span>
+                <div class="profile-icon">
 
-        </div>
+                    <%= profileLetter %>
 
-    </div>
+                </div>
 
+                <div class="profile-info">
 
-    <div class="invoice-parties">
+                    <strong>
+                        <%= userName %>
+                    </strong>
 
-        <div class="party-block">
+                </div>
 
-            <span class="party-label">Billed To</span>
-
-            <strong><%= app.getP_name() %></strong>
-
-            <p>
-                <%= app.getP_address() != null && !app.getP_address().isEmpty()
-                        ? app.getP_address() : "-" %>
-            </p>
-
-            <p><%= app.getContact_number() %></p>
+            </div>
 
         </div>
 
-        <div class="party-block">
+    </header>
 
-            <span class="party-label">Appointment</span>
 
-            <strong><%= app.getD_name() %></strong>
+    <section class="page-content">
 
-            <p>Attending Dentist</p>
+        <div class="invoice-wrap">
 
-            <p><%= appointmentDateTime %></p>
+            <div class="invoice-actions">
+
+                <a href="managebill" class="btn-clear">
+                    ← Back to Bills
+                </a>
+
+                <button type="button"
+                        class="btn-primary"
+                        onclick="window.print();">
+
+                    🖨 Print Bill
+
+                </button>
+
+            </div>
+
+            <div class="invoice-sheet">
+
+                <div class="invoice-header">
+
+                    <div class="clinic-info">
+
+                        <div class="clinic-name">
+                            <span class="clinic-logo">+</span>
+                            Sunrise Dental
+                        </div>
+
+                        <p>Dental Clinic</p>
+                        <p>No. 45, Lake Road, Colombo, Sri Lanka</p>
+                        <p>+94 11 234 5678 &nbsp;•&nbsp; hello@sunrisedental.lk</p>
+
+                    </div>
+
+                    <div class="invoice-meta">
+
+                        <h1>BILL</h1>
+
+                        <p><strong>Bill Ref</strong> <%= app.getA_number() %></p>
+                        <p><strong>Issued</strong> <%= issuedToday %></p>
+
+                        <span class="status-tag <%= statusClass %>">
+                            <%= status %>
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="invoice-parties">
+
+                    <div class="party-block">
+
+                        <span class="party-label">Billed To</span>
+
+                        <strong><%= app.getP_name() %></strong>
+
+                        <p>
+                            <%= app.getP_address() != null && !app.getP_address().isEmpty()
+                                    ? app.getP_address() : "-" %>
+                        </p>
+
+                        <p><%= app.getContact_number() %></p>
+
+                    </div>
+
+                    <div class="party-block">
+
+                        <span class="party-label">Appointment</span>
+
+                        <strong><%= app.getD_name() %></strong>
+
+                        <p>Attending Dentist</p>
+
+                        <p><%= appointmentDateTime %></p>
+
+                    </div>
+
+                </div>
+
+
+                <table class="invoice-table">
+
+                    <thead>
+
+                    <tr>
+
+                        <th class="col-no">#</th>
+                        <th>Treatment</th>
+                        <th class="align-right">Price (Rs.)</th>
+
+                    </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                    <%
+                        if (treatmentList.isEmpty()) {
+                    %>
+
+                    <tr>
+
+                        <td colspan="3" class="no-items">
+                            No treatments recorded for this appointment.
+                        </td>
+
+                    </tr>
+
+                    <%
+                        } else {
+
+                            int rowNumber = 1;
+
+                            for (apptreatment t : treatmentList) {
+
+                                BigDecimal price =
+                                        t.getPriceLkr() != null ? t.getPriceLkr() : BigDecimal.ZERO;
+                    %>
+
+                    <tr>
+
+                        <td class="col-no"><%= rowNumber %></td>
+                        <td><%= t.getT_name() %></td>
+                        <td class="align-right"><%= String.format("%.2f", price) %></td>
+
+                    </tr>
+
+                    <%
+                                rowNumber++;
+                            }
+                        }
+                    %>
+
+                    </tbody>
+
+                </table>
+
+
+                <div class="invoice-summary">
+
+                    <div class="summary-row">
+                        <span>Subtotal</span>
+                        <span>Rs. <%= String.format("%.2f", total) %></span>
+                    </div>
+
+                    <div class="summary-row total-row">
+                        <span>Total Amount</span>
+                        <span>Rs. <%= String.format("%.2f", total) %></span>
+                    </div>
+
+                </div>
+
+
+                <div class="invoice-footer">
+
+                    <p>Thank you for choosing Sunrise Dental Clinic.</p>
+                    <p>This is a system-generated bill and does not require a signature.</p>
+
+                </div>
+
+            </div>
 
         </div>
 
-    </div>
+    </section>
+
+</main>
 
 
-    <table class="invoice-table">
+<script>
 
-        <thead>
+function confirmLogout() {
 
-        <tr>
+    return confirm(
+        "Are you sure you want to logout?"
+    );
 
-            <th>#</th>
-            <th>Treatment</th>
-            <th class="align-right">Price (Rs.)</th>
+}
 
-        </tr>
-
-        </thead>
-
-        <tbody>
-
-        <%
-            if (treatmentList.isEmpty()) {
-        %>
-
-        <tr>
-
-            <td colspan="3" class="no-items">
-                No treatments recorded for this appointment.
-            </td>
-
-        </tr>
-
-        <%
-            } else {
-
-                int rowNumber = 1;
-
-                for (apptreatment t : treatmentList) {
-
-                    BigDecimal price =
-                            t.getPriceLkr() != null ? t.getPriceLkr() : BigDecimal.ZERO;
-        %>
-
-        <tr>
-
-            <td><%= rowNumber %></td>
-            <td><%= t.getT_name() %></td>
-            <td class="align-right"><%= String.format("%.2f", price) %></td>
-
-        </tr>
-
-        <%
-                    rowNumber++;
-                }
-            }
-        %>
-
-        </tbody>
-
-    </table>
-
-
-    <div class="invoice-total">
-
-        <span>Total Amount</span>
-        <strong>Rs. <%= String.format("%.2f", total) %></strong>
-
-    </div>
-
-
-    <div class="invoice-footer">
-
-        <p>Thank you for choosing Sunrise Dental Clinic.</p>
-        <p>This is a system-generated bill and does not require a signature.</p>
-
-    </div>
-
-</div>
+</script>
 
 
 </body>
