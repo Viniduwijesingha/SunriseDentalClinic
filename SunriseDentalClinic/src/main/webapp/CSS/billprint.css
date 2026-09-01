@@ -1,0 +1,319 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #e2e8f0;
+    color: #1e293b;
+    min-height: 100vh;
+    padding: 24px 16px 60px;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* ===== Toolbar (hidden when printing) ===== */
+
+.print-toolbar {
+    max-width: 780px;
+    margin: 0 auto 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.btn-clear {
+    height: 38px;
+    padding: 0 15px;
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid #cbd5e1;
+    border-radius: 7px;
+    color: #64748b;
+    font-size: 12px;
+    font-weight: 600;
+    background: #ffffff;
+}
+
+.btn-clear:hover {
+    background: #f8fafc;
+    color: #2563eb;
+}
+
+.btn-primary {
+    height: 38px;
+    padding: 0 18px;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    border: none;
+    border-radius: 7px;
+    background: #2563eb;
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.btn-primary:hover {
+    background: #1d4ed8;
+}
+
+/* ===== Invoice sheet ===== */
+
+.invoice-sheet {
+    max-width: 780px;
+    margin: 0 auto;
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 6px 24px rgba(15, 23, 42, 0.08);
+    padding: 40px 44px;
+}
+
+.invoice-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 20px;
+    padding-bottom: 24px;
+    border-bottom: 2px solid #1e293b;
+    margin-bottom: 24px;
+}
+
+.clinic-name {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 19px;
+    font-weight: 800;
+    color: #1e293b;
+}
+
+.clinic-logo {
+    width: 34px;
+    height: 34px;
+    border-radius: 9px;
+    background: linear-gradient(135deg, #2563eb, #3b82f6);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.clinic-info p {
+    margin-top: 4px;
+    color: #64748b;
+    font-size: 11px;
+}
+
+.invoice-meta {
+    text-align: right;
+}
+
+.invoice-meta h1 {
+    font-size: 24px;
+    letter-spacing: 2px;
+    color: #2563eb;
+    margin-bottom: 8px;
+}
+
+.invoice-meta p {
+    font-size: 11.5px;
+    color: #475569;
+    margin-bottom: 2px;
+}
+
+.status-tag {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 4px 10px;
+    border-radius: 5px;
+    font-size: 9.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+
+.status-pending {
+    background: #fef3c7;
+    color: #b45309;
+}
+
+.status-confirmed {
+    background: #dbeafe;
+    color: #1d4ed8;
+}
+
+.status-completed {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.status-cancelled {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+/* ===== Parties ===== */
+
+.invoice-parties {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 28px;
+}
+
+.party-label {
+    display: block;
+    color: #94a3b8;
+    font-size: 9.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+}
+
+.party-block strong {
+    display: block;
+    font-size: 13px;
+    color: #1e293b;
+    margin-bottom: 4px;
+}
+
+.party-block p {
+    font-size: 11.5px;
+    color: #64748b;
+    margin-top: 2px;
+}
+
+/* ===== Table ===== */
+
+.invoice-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 4px;
+}
+
+.invoice-table thead th {
+    text-align: left;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    color: #64748b;
+    padding: 10px 8px;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+.invoice-table td {
+    font-size: 12px;
+    color: #334155;
+    padding: 11px 8px;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.align-right {
+    text-align: right;
+}
+
+.no-items {
+    text-align: center;
+    color: #94a3b8;
+    padding: 24px 8px;
+}
+
+/* ===== Total ===== */
+
+.invoice-total {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 14px;
+    padding: 16px 8px;
+    margin-top: 10px;
+    border-top: 2px solid #1e293b;
+}
+
+.invoice-total span {
+    font-size: 12px;
+    font-weight: 600;
+    color: #64748b;
+}
+
+.invoice-total strong {
+    font-size: 20px;
+    color: #1e293b;
+}
+
+/* ===== Footer ===== */
+
+.invoice-footer {
+    margin-top: 36px;
+    text-align: center;
+    color: #94a3b8;
+    font-size: 10.5px;
+}
+
+.invoice-footer p {
+    margin-bottom: 3px;
+}
+
+/* ===== Print ===== */
+
+@media print {
+
+    body {
+        background: #ffffff;
+        padding: 0;
+    }
+
+    .print-toolbar {
+        display: none;
+    }
+
+    .invoice-sheet {
+        box-shadow: none;
+        border-radius: 0;
+        max-width: 100%;
+        padding: 0;
+    }
+
+}
+
+@media (max-width: 640px) {
+
+    .invoice-sheet {
+        padding: 26px 20px;
+    }
+
+    .invoice-header {
+        flex-direction: column;
+    }
+
+    .invoice-meta {
+        text-align: left;
+    }
+
+    .invoice-parties {
+        grid-template-columns: 1fr;
+    }
+
+    .print-toolbar {
+        flex-direction: column;
+        gap: 10px;
+        align-items: stretch;
+    }
+
+    .print-toolbar .btn-clear,
+    .print-toolbar .btn-primary {
+        justify-content: center;
+    }
+
+}

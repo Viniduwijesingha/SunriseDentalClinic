@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.ArrayList"%>
+<%@ page import="java.math.BigDecimal"%>
 <%@ page import="model.appointment"%>
 
 <%
@@ -21,7 +22,7 @@
             (ArrayList<appointment>) request.getAttribute("appointmentList");
 
     if (appointmentList == null) {
-        response.sendRedirect("manageappointment");
+        response.sendRedirect("managebill");
         return;
     }
 
@@ -31,14 +32,19 @@
         searchKeyword = "";
     }
 
-    int pendingCount = 0;
+    int completedCount = 0;
+
+    BigDecimal totalRevenue = BigDecimal.ZERO;
 
     for (appointment a : appointmentList) {
 
         String s = a.getStatus();
 
-        if (s != null && s.equalsIgnoreCase("Pending")) {
-            pendingCount++;
+        BigDecimal total = a.getTotalPrice() != null ? a.getTotalPrice() : BigDecimal.ZERO;
+
+        if (s != null && s.equalsIgnoreCase("Completed")) {
+            completedCount++;
+            totalRevenue = totalRevenue.add(total);
         }
     }
 %>
@@ -53,10 +59,10 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
 
-    <title>Manage Appointments - Sunrise Dental</title>
+    <title>Manage Bills - Sunrise Dental</title>
 
     <link rel="stylesheet"
-          href="CSS/manageappointments.css">
+          href="CSS/managebills.css">
 
 </head>
 
@@ -106,7 +112,7 @@
 
 
         <a href="manageappointment"
-           class="nav-item active">
+           class="nav-item">
 
             <span class="nav-icon">▣</span>
 
@@ -116,7 +122,7 @@
 
 
         <a href="managebill"
-           class="nav-item">
+           class="nav-item active">
 
             <span class="nav-icon">$</span>
 
@@ -171,11 +177,7 @@
 
             <div class="topbar-title">
 
-                <h1>Manage Appointments</h1>
-
-                <div class="breadcrumb">
-
-                </div>
+                <h1>Manage Bills</h1>
 
             </div>
 
@@ -250,18 +252,39 @@
 
             <div class="summary-card">
 
-                <div class="summary-icon icon-pending">
-                    ⏱
+                <div class="summary-icon icon-completed">
+                    ✓
                 </div>
 
                 <div>
 
                     <span class="summary-label">
-                        Pending Appointments
+                        Completed
                     </span>
 
                     <strong>
-                        <%= pendingCount %>
+                        <%= completedCount %>
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <div class="summary-icon icon-revenue">
+                    $
+                </div>
+
+                <div>
+
+                    <span class="summary-label">
+                        Billable Revenue
+                    </span>
+
+                    <strong>
+                        Rs. <%= String.format("%.2f", totalRevenue) %>
                     </strong>
 
                 </div>
@@ -279,22 +302,19 @@
 
                     <div>
 
-                        <h2>Appointment List</h2>
+                        <h2>Appointment Bills</h2>
+
+                        <p>
+                            Every appointment's bill is generated from its
+                            recorded treatments. Print a bill any time.
+                        </p>
 
                     </div>
-
-
-                    <a href="appointmentadd"
-                       class="btn-primary">
-
-                        + New Appointment
-
-                    </a>
 
                 </div>
 
 
-                <form action="manageappointment"
+                <form action="managebill"
                       method="get"
                       class="search-form">
 
@@ -320,7 +340,7 @@
 
                     <% if (!searchKeyword.trim().isEmpty()) { %>
 
-                        <a href="manageappointment"
+                        <a href="managebill"
                            class="btn-clear">
 
                             Clear
@@ -373,7 +393,7 @@
                             class="no-data">
 
                             <div class="empty-icon">
-                                ▣
+                                $
                             </div>
 
                             <h3>No Appointments Found</h3>
@@ -478,7 +498,7 @@
                             Rs. <%= String.format("%.2f",
                                     app.getTotalPrice() != null
                                         ? app.getTotalPrice()
-                                        : java.math.BigDecimal.ZERO) %>
+                                        : BigDecimal.ZERO) %>
                         </td>
 
 
@@ -497,27 +517,12 @@
 
                             <div class="action-buttons">
 
-                                <a href="appointmentview?a_id=<%= app.getA_id() %>"
-                                   class="btn-view">
+                                <a href="billprint?a_id=<%= app.getA_id() %>"
+                                   class="btn-print"
+                                   target="_blank"
+                                   rel="noopener">
 
-                                    View
-
-                                </a>
-
-
-                                <a href="appointmentupdate?a_id=<%= app.getA_id() %>"
-                                   class="btn-edit">
-
-                                    Edit
-
-                                </a>
-
-
-                                <a href="appointmentdelete?a_id=<%= app.getA_id() %>"
-                                   class="btn-delete"
-                                   onclick="return confirmDelete('<%= app.getA_number() %>');">
-
-                                    Delete
+                                    Print Bill
 
                                 </a>
 
@@ -561,17 +566,6 @@ function showNotification() {
 
     alert(
         "You currently have no new notifications."
-    );
-
-}
-
-
-function confirmDelete(appointmentNo) {
-
-    return confirm(
-        "Are you sure you want to delete appointment '" +
-        appointmentNo +
-        "'?"
     );
 
 }
