@@ -55,7 +55,7 @@ public class userlogin extends HttpServlet {
             );
 
             // Redirect to user home page
-            response.sendRedirect("userhome.jsp");
+            response.sendRedirect("userhome");
 
         } else {
 

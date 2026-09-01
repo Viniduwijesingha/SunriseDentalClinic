@@ -1,4 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.math.BigDecimal"%>
+<%@ page import="java.util.ArrayList"%>
+<%@ page import="model.appointment"%>
+
 <%
     String userName = (String) session.getAttribute("loggedInUser");
     String userEmail = (String) session.getAttribute("userEmail");
@@ -8,8 +12,30 @@
         return;
     }
 
+    if (userEmail == null) {
+        userEmail = "";
+    }
+
     String profileLetter = userName.substring(0, 1).toUpperCase();
-    if (userEmail == null) { userEmail = ""; }
+
+    Integer totalPatients = (Integer) request.getAttribute("totalPatients");
+
+    if (totalPatients == null) {
+        response.sendRedirect("userhome");
+        return;
+    }
+
+    Integer activePatients = (Integer) request.getAttribute("activePatients");
+    Integer totalAppointments = (Integer) request.getAttribute("totalAppointments");
+    BigDecimal totalRevenue = (BigDecimal) request.getAttribute("totalRevenue");
+
+    ArrayList<appointment> recentAppointments =
+            (ArrayList<appointment>) request.getAttribute("recentAppointments");
+
+    if (activePatients == null) { activePatients = 0; }
+    if (totalAppointments == null) { totalAppointments = 0; }
+    if (totalRevenue == null) { totalRevenue = BigDecimal.ZERO; }
+    if (recentAppointments == null) { recentAppointments = new ArrayList<appointment>(); }
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -32,9 +58,9 @@
 
     <nav class="navigation">
         <div class="nav-section-title">Main Menu</div>
-        <a href="userhome.jsp" class="nav-item active"><span class="nav-icon">⌂</span><span>Dashboard</span></a>
-        <a href="managepatient.jsp" class="nav-item"><span class="nav-icon">♙</span><span>Manage Users</span></a>
-        <a href="manageappointments.jsp" class="nav-item"><span class="nav-icon">▣</span><span>Appointments</span></a>
+        <a href="userhome" class="nav-item active"><span class="nav-icon">⌂</span><span>Dashboard</span></a>
+        <a href="managepatient" class="nav-item"><span class="nav-icon">♙</span><span>Manage Patients</span></a>
+        <a href="manageappointment" class="nav-item"><span class="nav-icon">▣</span><span>Appointments</span></a>
         <a href="managebills.jsp" class="nav-item"><span class="nav-icon">$</span><span>Manage Bills</span></a>
         <a href="helpandsupport.jsp" class="nav-item"><span class="nav-icon">?</span><span>Help & Support</span></a>
     </nav>
@@ -56,11 +82,18 @@
             <div class="topbar-title">
                 <h1>Dashboard</h1>
                 <div class="breadcrumb">
+                    <span class="active">Dashboard</span>
                 </div>
             </div>
         </div>
 
         <div class="topbar-right">
+
+            <form action="managepatient" method="get" class="search-box">
+                <span>🔍</span>
+                <input type="text" name="search" placeholder="Quick search patients...">
+            </form>
+
             <button class="notification" type="button" title="Notifications" onclick="showNotification();">🔔</button>
             <div class="profile" title="<%= userEmail %>">
                 <div class="profile-icon"><%= profileLetter %></div>
@@ -76,8 +109,8 @@
 
         <div class="welcome-section">
             <div class="welcome-content">
-                <p class="welcome-small">Welcome back,</p>
-                <h1><%= userName %> 👋</h1>
+                <h2><%= userName %> 👋</h2>
+                <br>
                 <p class="welcome-description">Manage your dental appointments, bills and account information from one convenient place.</p>
             </div>
             <div class="welcome-icon">🦷</div>
@@ -88,8 +121,8 @@
                 <div class="stat-icon patient-icon">♙</div>
                 <div class="stat-info">
                     <span>Total Patients</span>
-                    <h2>0</h2>
-                    <small>Registered patients</small>
+                    <h2><%= totalPatients %></h2>
+                    <small><%= activePatients %> active</small>
                 </div>
             </div>
 
@@ -97,17 +130,17 @@
                 <div class="stat-icon appointment-icon">📅</div>
                 <div class="stat-info">
                     <span>Total Appointments</span>
-                    <h2>0</h2>
-                    <small>Scheduled appointments</small>
+                    <h2><%= totalAppointments %></h2>
+                    <small>All scheduled appointments</small>
                 </div>
             </div>
 
             <div class="stat-card">
                 <div class="stat-icon revenue-icon">Rs.</div>
                 <div class="stat-info">
-                    <span>Total Revenue</span>
-                    <h2>Rs. 0.00</h2>
-                    <small>Total clinic revenue</small>
+                    <span>Billable Revenue</span>
+                    <h2>Rs. <%= String.format("%,.2f", totalRevenue) %></h2>
+                    <small>Total amount billed across all appointments</small>
                 </div>
             </div>
         </div>
@@ -119,16 +152,16 @@
         </div>
 
         <div class="cards-container">
-            <a href="manageusers.jsp" class="dashboard-card">
+            <a href="managepatient" class="dashboard-card">
                 <div class="card-icon blue-icon">♙</div>
                 <div class="card-content">
-                    <h3>Manage Users</h3>
-                    <p>View and manage your account information and registered user details.</p>
+                    <h3>Manage Patients</h3>
+                    <p>View and manage registered patient details.</p>
                 </div>
                 <span class="arrow">→</span>
             </a>
 
-            <a href="manageappointments.jsp" class="dashboard-card">
+            <a href="manageappointment" class="dashboard-card">
                 <div class="card-icon appointment-card-icon">📅</div>
                 <div class="card-content">
                     <h3>Manage Appointments</h3>
@@ -154,6 +187,88 @@
                 </div>
                 <span class="arrow">→</span>
             </a>
+        </div>
+
+
+        <div class="section-header">
+            <div>
+                <h2>Recent Appointments</h2>
+            </div>
+            <a href="manageappointment" class="btn-primary">View All</a>
+        </div>
+
+        <div class="dashboard-table">
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Appointment No</th>
+                        <th>Patient</th>
+                        <th>Dentist</th>
+                        <th>Date & Time</th>
+                        <th>Total (Rs.)</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    <% if (recentAppointments.isEmpty()) { %>
+
+                        <tr>
+                            <td colspan="6" style="text-align:center; padding: 26px; color:#94a3b8;">
+                                No appointments booked yet.
+                            </td>
+                        </tr>
+
+                    <% } else {
+
+                        for (appointment app : recentAppointments) {
+
+                            String status = app.getStatus();
+
+                            if (status == null || status.trim().isEmpty()) {
+                                status = "Pending";
+                            }
+
+                            String statusClass;
+
+                            if (status.equalsIgnoreCase("Completed") ||
+                                    status.equalsIgnoreCase("Confirmed")) {
+
+                                statusClass = "status-success";
+
+                            } else if (status.equalsIgnoreCase("Cancelled")) {
+
+                                statusClass = "status-cancelled";
+
+                            } else {
+
+                                statusClass = "status-pending";
+                            }
+                    %>
+
+                        <tr>
+                            <td><%= app.getA_number() %></td>
+                            <td><%= app.getP_name() %></td>
+                            <td><%= app.getD_name() %></td>
+                            <td><%= app.getA_datetime() != null ? app.getA_datetime() : "-" %></td>
+                            <td>
+                                <%= app.getTotalPrice() != null
+                                        ? String.format("%.2f", app.getTotalPrice())
+                                        : "0.00" %>
+                            </td>
+                            <td><span class="status <%= statusClass %>"><%= status %></span></td>
+                        </tr>
+
+                    <%  }
+                        } %>
+
+                </tbody>
+
+            </table>
+
         </div>
 
 

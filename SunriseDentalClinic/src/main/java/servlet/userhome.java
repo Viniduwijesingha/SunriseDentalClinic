@@ -13,17 +13,14 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import model.appointment;
-import model.bill;
 import model.patient;
 import services.appointmentService;
-import services.billService;
 import services.patientService;
 
 @WebServlet("/userhome")
 public class userhome extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
-
     private static final int RECENT_APPOINTMENTS_LIMIT = 5;
 
     @Override
@@ -41,20 +38,26 @@ public class userhome extends HttpServlet {
             return;
         }
 
+        // Always force a fresh render of the dashboard. Without this,
+        // a browser back/forward navigation (or an intermediate proxy)
+        // can show a previously cached copy of this page - including a
+        // stale Billable Revenue figure - instead of hitting the
+        // server again.
+        response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+        response.setHeader("Pragma", "no-cache");
+        response.setDateHeader("Expires", 0);
+
         patientService patService = new patientService();
         ArrayList<patient> patientList = patService.getAllPatients();
 
         appointmentService apptService = new appointmentService();
 
-
+        // getAllAppointments() is already ordered a_id DESC,
+        // so the first N entries are the most recent appointments.
         ArrayList<appointment> appointmentList =
                 apptService.getAllAppointments();
 
-        billService billServ = new billService();
-        ArrayList<bill> billList = billServ.getAllBills();
-
         int totalPatients = patientList.size();
-
         int activePatients = 0;
 
         for (patient p : patientList) {
@@ -68,15 +71,18 @@ public class userhome extends HttpServlet {
 
         int totalAppointments = appointmentList.size();
 
+        // Billable Revenue = the total amount billed across all
+        // appointments, based on each appointment's treatment total
+        // (the same figure shown in the Total (Rs.) column on the
+        // Manage Appointments page). This is intentionally independent
+        // of the separate `bill` table - a bill record doesn't need to
+        // exist yet for treatment work to count as billable.
         BigDecimal totalRevenue = BigDecimal.ZERO;
 
-        for (bill b : billList) {
+        for (appointment app : appointmentList) {
 
-            if (b.getStatus() != null &&
-                    b.getStatus().equalsIgnoreCase("Paid") &&
-                    b.getAmount() != null) {
-
-                totalRevenue = totalRevenue.add(b.getAmount());
+            if (app.getTotalPrice() != null) {
+                totalRevenue = totalRevenue.add(app.getTotalPrice());
             }
         }
 

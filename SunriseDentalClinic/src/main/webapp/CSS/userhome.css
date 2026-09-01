@@ -205,6 +205,12 @@ body {
     border-radius: 7px;
     padding: 0 12px;
     color: #94a3b8;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.search-box:focus-within {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
 }
 
 .search-box input {
@@ -396,7 +402,8 @@ body {
     margin-bottom: 5px;
 }
 
-.welcome-section h1 {
+.welcome-section h1,
+.welcome-section h2 {
     font-size: 25px;
     margin-bottom: 7px;
     font-weight: 700;
@@ -711,6 +718,7 @@ body {
     text-align: left;
     padding: 12px 14px;
     border-bottom: 1px solid #e2e8f0;
+    white-space: nowrap;
 }
 
 .dashboard-table td {
@@ -933,7 +941,8 @@ body {
         padding: 21px;
     }
 
-    .welcome-section h1 {
+    .welcome-section h1,
+    .welcome-section h2 {
         font-size: 22px;
     }
 
@@ -995,7 +1004,8 @@ body {
         display: none;
     }
 
-    .welcome-section h1 {
+    .welcome-section h1,
+    .welcome-section h2 {
         font-size: 20px;
     }
 
