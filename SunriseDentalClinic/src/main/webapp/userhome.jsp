@@ -81,9 +81,6 @@
 
             <div class="topbar-title">
                 <h1>Dashboard</h1>
-                <div class="breadcrumb">
-                    <span class="active">Dashboard</span>
-                </div>
             </div>
         </div>
 
