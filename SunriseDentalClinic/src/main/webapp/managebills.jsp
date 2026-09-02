@@ -520,7 +520,7 @@
                                 <a href="billprint?a_id=<%= app.getA_id() %>"
                                    class="btn-print">
 
-                                    Print Bill
+                                     Bill
 
                                 </a>
 

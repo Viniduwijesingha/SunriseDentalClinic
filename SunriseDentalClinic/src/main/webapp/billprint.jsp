@@ -225,7 +225,6 @@
 
     </header>
 
-
     <section class="page-content">
 
         <div class="invoice-wrap">
@@ -278,7 +277,6 @@
 
                 </div>
 
-
                 <div class="invoice-parties">
 
                     <div class="party-block">
@@ -309,7 +307,6 @@
                     </div>
 
                 </div>
-
 
                 <table class="invoice-table">
 
@@ -383,7 +380,6 @@
 
                 </div>
 
-
                 <div class="invoice-footer">
 
                     <p>Thank you for choosing Sunrise Dental Clinic.</p>
@@ -399,7 +395,6 @@
 
 </main>
 
-
 <script>
 
 function confirmLogout() {
@@ -411,7 +406,6 @@ function confirmLogout() {
 }
 
 </script>
-
 
 </body>
 

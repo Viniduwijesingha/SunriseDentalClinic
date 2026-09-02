@@ -51,7 +51,6 @@
 
     </div>
 
-
     <nav class="navigation">
 
         <div class="nav-section-title">
@@ -129,7 +128,6 @@
 
 <main class="main-content">
 
-
     <header class="topbar">
 
         <div class="topbar-left">
@@ -150,7 +148,6 @@
             </div>
 
         </div>
-
 
         <div class="topbar-right">
 
@@ -192,9 +189,7 @@
 
     </header>
 
-
     <section class="page-content">
-
 
         <div class="contact-grid">
 

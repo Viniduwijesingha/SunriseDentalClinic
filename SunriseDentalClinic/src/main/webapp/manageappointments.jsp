@@ -156,7 +156,6 @@
 
 <main class="main-content">
 
-
     <header class="topbar">
 
         <div class="topbar-left">
@@ -223,7 +222,6 @@
 
 
     <section class="page-content">
-
 
         <div class="summary-grid">
 
@@ -343,17 +341,11 @@
                     <tr>
 
                         <th>Appointment No</th>
-
                         <th>Patient</th>
-
                         <th>Dentist</th>
-
                         <th>Date & Time</th>
-
                         <th>Total (Rs.)</th>
-
                         <th>Status</th>
-
                         <th>Actions</th>
 
                     </tr>

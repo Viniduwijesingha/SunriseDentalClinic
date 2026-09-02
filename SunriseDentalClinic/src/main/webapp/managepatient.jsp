@@ -247,7 +247,6 @@
 
             </div>
 
-
             <div class="summary-card">
 
                 <div class="summary-icon icon-active">
@@ -269,7 +268,6 @@
             </div>
 
         </div>
-
 
         <div class="table-card">
 
@@ -343,19 +341,12 @@
                     <tr>
 
                         <th>ID</th>
-
                         <th>Patient Name</th>
-
                         <th>Address</th>
-
                         <th>Contact Number</th>
-
                         <th>Gender</th>
-
                         <th>Registered Date</th>
-
                         <th>Status</th>
-
                         <th>Actions</th>
 
                     </tr>
