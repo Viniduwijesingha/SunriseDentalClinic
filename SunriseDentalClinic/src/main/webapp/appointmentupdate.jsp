@@ -387,8 +387,6 @@
                 </div>
 
 
-                <!-- ===================== APPOINTMENT DETAILS ===================== -->
-
                 <div class="form-section">
 
                     <div class="form-section-title">
@@ -498,8 +496,6 @@
 
                 </div>
 
-
-                <!-- ===================== TREATMENTS ===================== -->
 
                 <div class="form-section form-section-last">
 
